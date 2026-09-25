@@ -18,11 +18,15 @@ function highlighter() {
   if (!hl) {
     // The upstream grammar scopes `Trusted` and `Untrusted` alike; the brand only highlights `Untrusted`.
     const raw = fs.readFileSync(path.join(process.cwd(), "content", "ward.tmLanguage.json"), "utf8");
-    const grammar = JSON.parse(raw, (_k, v) =>
-      v && v.name === "support.type.trust.ward" && typeof v.match === "string"
-        ? { name: "support.type.trust.untrusted.ward", match: "\\bUntrusted\\b" }
-        : v,
-    );
+    // The modifier rule can match an empty string at the start of a line (`ai fn ...`), which makes
+    // the tokenizer give up on the rest of that line; require at least one modifier instead.
+    const grammar = JSON.parse(raw, (_k, v) => {
+      if (v && v.name === "support.type.trust.ward" && typeof v.match === "string")
+        return { name: "support.type.trust.untrusted.ward", match: "\\bUntrusted\\b" };
+      if (v && typeof v.match === "string" && v.match.includes("(?:(open|override|abstract)\\s+)*(?=(?:ai"))
+        return { ...v, match: v.match.replace("(?:(open|override|abstract)\\s+)*", "((?:(?:open|override|abstract)\\s+)+)") };
+      return v;
+    });
     hl = createHighlighter({
       themes: [wardLight, wardDark],
       langs: [{ ...grammar, name: "ward", aliases: ["wardscript"] }, "bash", "powershell", "python", "typescript", "json", "toml", "rust", "text"],
