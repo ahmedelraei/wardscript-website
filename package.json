@@ -6,9 +6,17 @@
     "build": "next build",
     "start": "next start",
     "sync-docs": "node scripts/sync-docs.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build-wasm": "node scripts/build-wasm.mjs"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.20.3",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/lint": "^6.9.7",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.13",
+    "@lezer/highlight": "^1.2.4",
     "hast-util-to-string": "^3.0.1",
     "next": "^15.5.26",
     "react": "^19.3.0",

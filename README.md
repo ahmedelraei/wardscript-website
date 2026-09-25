@@ -24,4 +24,18 @@ npm run sync-docs -- ../wardscript
 - `/` — landing page
 - `/docs/` — getting started, language tour (`/docs/language/...`), guides (`/docs/guides/...`)
   and reference (`/docs/reference/...`)
+- `/playground/` — edit, check, build and run Wardscript in the browser
 - `/examples/` — the example programs
+
+## Playground
+
+The playground runs the real checker, compiled to WebAssembly from the `ward_wasm` crate in the
+Wardscript repo, and runs programs with the generated Python in [Pyodide](https://pyodide.org)
+(loaded from jsDelivr on the first Run). The built checker is committed in `public/wasm/`; to
+rebuild it after a language change:
+
+```bash
+rustup target add wasm32-unknown-unknown
+cargo install wasm-bindgen-cli --version <the crate's wasm-bindgen version>
+npm run build-wasm -- ../wardscript
+```
