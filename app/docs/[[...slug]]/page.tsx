@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { allDocs, findDoc, readDoc, REPO } from "../../../lib/docs";
+import { allDocs, findDoc, readDoc, SITE_REPO } from "../../../lib/docs";
 import { renderMarkdown } from "../../../lib/markdown";
 
 type Props = { params: Promise<{ slug?: string[] }> };
@@ -30,7 +30,7 @@ export default async function DocPage({ params }: Props) {
         <h1>{title || doc.title}</h1>
         <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
         <div className="doc-foot">
-          <a href={`${REPO}/edit/main/docs/${doc.file}`} target="_blank" rel="noreferrer">Edit this page on GitHub</a>
+          <a href={`${SITE_REPO}/edit/main/content/docs/${doc.file}`} target="_blank" rel="noreferrer">Edit this page on GitHub</a>
         </div>
         <nav className="pager">
           {prev ? <Link href={prev.href + "/"}><small>Previous</small>{prev.title}</Link> : <span />}
