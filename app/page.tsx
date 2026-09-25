@@ -37,12 +37,12 @@ const ERROR = `[W0107] Error: untrusted data reaches the tool call \`mail.send_e
     │ Help: \`validate(x, rule)?\`, \`approve(x)\`, or \`declassify(x, "why")\``;
 
 const FEATURES = [
-  { t: "Trust labels", d: "Values are Trusted or Untrusted. Model output, tool results and network input are untrusted; tool arguments are sinks. The checker tracks every flow.", href: "/docs/spec/trust/" },
-  { t: "AI functions", d: "An ai fn's body is its prompt and its return type is the schema. Answers are validated, refined with where clauses, and retried with the reason when they fail.", href: "/docs/spec/types/" },
-  { t: "Effects & budgets", d: "Declare uses {llm, mail.send} and budget {calls: 3, cost: 0.10}. The Rule of Two is enforced at compile time; unknown cost fails closed.", href: "/docs/spec/effects/" },
-  { t: "Typed MCP tools", d: "import mcp \"gmail\" as mail. Tool schemas are pinned in ward.lock, calls are type-checked, and sink parameters are guarded.", href: "/docs/spec/tools/" },
-  { t: "Python & TypeScript", d: "Compile to a Python module with .pyi stubs or to TypeScript for Node, backed by a Rust core, audit traces and OTLP export.", href: "/docs/spec/runtime/" },
-  { t: "Recorded tests", d: "test blocks replay recorded model answers and tool results, so ward test is deterministic in CI. ward test --record captures new ones.", href: "/docs/spec/testing/" },
+  { t: "Trust labels", d: "Values are Trusted or Untrusted. Model output, tool results and network input are untrusted; tool arguments are sinks. The checker tracks every flow.", href: "/docs/language/trust/" },
+  { t: "AI functions", d: "An ai fn's body is its prompt and its return type is the schema. Answers are validated, refined with where clauses, and retried with the reason when they fail.", href: "/docs/language/ai-functions/" },
+  { t: "Effects & budgets", d: "Declare uses {llm, mail.send} and budget {calls: 3, cost: 0.10}. The Rule of Two is enforced at compile time; unknown cost fails closed.", href: "/docs/language/effects/" },
+  { t: "Typed MCP tools", d: "import mcp \"gmail\" as mail. Tool schemas are pinned in ward.lock, calls are type-checked, and sink parameters are guarded.", href: "/docs/language/tools/" },
+  { t: "Python & TypeScript", d: "Compile to a Python module with .pyi stubs or to TypeScript for Node, backed by a Rust core, audit traces and OTLP export.", href: "/docs/guides/python/" },
+  { t: "Recorded tests", d: "test blocks replay recorded model answers and tool results, so ward test is deterministic in CI. ward test --record captures new ones.", href: "/docs/language/testing/" },
 ];
 
 export default async function Home() {
@@ -60,7 +60,7 @@ export default async function Home() {
           </p>
           <div className="cta">
             <Link href="/docs/" className="btn primary">Get started</Link>
-            <Link href="/docs/demo/" className="btn">See the demo</Link>
+            <Link href="/docs/prompt-injection/" className="btn">See the demo</Link>
           </div>
           <pre className="install"><span className="muted">$</span> curl -fsSL https://raw.githubusercontent.com/ahmedelraei/wardscript/main/install/install.sh | sh</pre>
         </div>
@@ -79,7 +79,7 @@ export default async function Home() {
               model&apos;s answer, through your variables, into the tool call. Fix it with a validation rule, a human
               approval, or a documented declassification. Every approval lands in the audit trace.
             </p>
-            <Link href="/docs/spec/diagnostics/" className="link">All diagnostics →</Link>
+            <Link href="/docs/reference/diagnostics/" className="link">All diagnostics →</Link>
           </div>
           <div className="err" dangerouslySetInnerHTML={{ __html: err }} />
         </div>

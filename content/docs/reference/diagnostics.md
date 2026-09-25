@@ -1,13 +1,16 @@
 # Diagnostics
 
-Every diagnostic has a stable code, listed in `ward_syntax::diag::codes` (a test fails
-if a code is missing from this page or assigned twice). A code's meaning never changes once assigned,
-and retired codes are not reused. `ward check --format json` reports each
-diagnostic with its `code`, `severity`, `message`, primary `span`, all `labels`
-(each with a `span` and optional `message`; the first is `primary`), and an
-optional `help`, plus the `file` it's in, and `notes` when there are any (context
-without a span in this file, such as W0107 path steps in another module) (programs can span several modules). Spans carry the byte `offset` plus a 1-based `line` and `column`
-(the column counts characters).
+Every diagnostic has a stable code like `W0107`. A code's meaning never changes
+once assigned, and retired codes are never reused, so it's safe to search for
+them or mention them in comments.
+
+Errors stop the build; *warnings* don't. The compiler reports every independent
+error in a file rather than stopping at the first one. If a file has syntax
+errors, name and type checking are skipped, since those errors would mostly be
+echoes.
+
+For editor and CI integrations, `ward check --format json` reports each
+diagnostic with its code, severity, message, location and labels.
 
 ## W00xx: syntax
 
@@ -45,7 +48,7 @@ without a span in this file, such as W0107 path steps in another module) (progra
 | W0104 | item of another module isn't `pub` |
 | W0105 | no such member: enum variant or module item |
 | W0106 | wrong kind of name: a type used as a value, or a value used as a type |
-| W0107 | untrusted data reaches a sensitive action: a tool argument, or anything declared `Trusted` ([trust](trust.md)); labels show the path, numbered |
+| W0107 | untrusted data reaches a sensitive action: a tool argument, or anything declared `Trusted` ([Trust](../language/trust.md)); labels show the path, numbered |
 
 ## W011x-W012x: types
 
@@ -79,7 +82,7 @@ without a span in this file, such as W0107 path steps in another module) (progra
 
 ## W02xx: effects, budgets, Rule of Two
 
-See [effects](effects.md).
+See [Effects and budgets](../language/effects.md).
 
 | Code | Meaning |
 |---|---|
@@ -97,21 +100,9 @@ See [effects](effects.md).
 
 ## W03xx: tools
 
-See [tools](tools.md).
+See [Tools](../language/tools.md).
 
 | Code | Meaning |
 |---|---|
 | W0300 | `ward.lock` can't be read: invalid JSON, an unknown version, or a malformed tool |
 | W0301 | *warning*: a tool import's source isn't in `ward.lock`, so its calls aren't typed |
-
-## Error recovery
-
-The parser reports every independent syntax error in a file rather than stopping
-at the first one. After an error it resynchronises at the next `,` or closing
-delimiter inside a list, the next statement inside a block, or the next item
-keyword at the top level. Follow-on errors are suppressed: at most one error per
-token, none right after a character the lexer rejected, and no "unclosed" error
-when the input ends inside an unterminated string.
-
-If any file has syntax errors, `ward check` stops after parsing: name and type
-errors in code that didn't parse are mostly echoes of the syntax error.

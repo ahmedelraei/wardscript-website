@@ -1,13 +1,14 @@
-// Copies docs from a local checkout of the wardscript repo into content/.
+// Copies the syntax grammar, images and example programs from a local checkout of the
+// wardscript repo into content/. The docs themselves are written for the site and live
+// in content/docs/; they are not synced.
 // Usage: node scripts/sync-docs.mjs [path-to-wardscript]  (default: ../wardscript)
-import { cpSync, rmSync, readdirSync } from "node:fs";
+import { cpSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const src = resolve(process.argv[2] ?? "../wardscript");
-rmSync("content/docs", { recursive: true, force: true });
-cpSync(join(src, "docs"), "content/docs", { recursive: true });
 cpSync(join(src, "editors/vscode/syntaxes/ward.tmLanguage.json"), "content/ward.tmLanguage.json");
 for (const f of readdirSync(join(src, "docs/img"))) cpSync(join(src, "docs/img", f), join("public/img", f));
+for (const f of readdirSync(join(src, "docs/img"))) cpSync(join(src, "docs/img", f), join("content/docs/img", f));
 for (const f of readdirSync(join(src, "examples")).filter((f) => f.endsWith(".wardscript")))
   cpSync(join(src, "examples", f), join("content", f));
-console.log(`synced docs from ${src}`);
+console.log(`synced grammar, images and examples from ${src}`);
