@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export const REPO = "https://github.com/ahmedelraei/wardscript";
+export const SITE_REPO = "https://github.com/ahmedelraei/wardscript-website";
 const ROOT = path.join(process.cwd(), "content", "docs");
 
 export type Doc = { slug: string[]; file: string; title: string; href: string };
@@ -15,33 +16,28 @@ function titleOf(file: string) {
 /** Source file (relative to docs/) -> URL slug. */
 export function slugFor(file: string): string[] {
   const noExt = file.replace(/\.md$/, "");
-  if (noExt === "guide") return [];
-  if (noExt === "spec/README") return ["spec"];
+  if (noExt === "index") return [];
   return noExt.split("/");
 }
 
 export const hrefFor = (slug: string[]) => "/docs" + (slug.length ? "/" + slug.join("/") : "");
 
-const SPEC_ORDER = ["README", "syntax", "names", "types", "trust", "effects", "tools", "runtime", "typescript", "testing", "diagnostics"];
+/** The sidebar, in reading order. Titles default to each page's first heading. */
+const NAV: [string, string[]][] = [
+  ["Getting started", ["index.md", "installation.md", "quickstart.md", "prompt-injection.md"]],
+  ["Language", ["language/basics.md", "language/types.md", "language/ai-functions.md", "language/errors.md", "language/trust.md", "language/effects.md", "language/tools.md", "language/testing.md"]],
+  ["Guides", ["guides/python.md", "guides/typescript.md", "guides/models.md", "guides/audit-traces.md"]],
+  ["Reference", ["reference/cli.md", "reference/diagnostics.md", "reference/grammar.md"]],
+];
 
 let cache: Section[] | null = null;
 export function sections(): Section[] {
   if (cache) return cache;
-  const mk = (file: string, title?: string): Doc => {
+  const mk = (file: string): Doc => {
     const slug = slugFor(file);
-    return { file, slug, href: hrefFor(slug), title: title ?? titleOf(file) };
+    return { file, slug, href: hrefFor(slug), title: titleOf(file) };
   };
-  const list = (dir: string) => fs.readdirSync(path.join(ROOT, dir)).filter((f) => f.endsWith(".md"));
-  const spec = list("spec")
-    .map((f) => f.replace(/\.md$/, ""))
-    .sort((a, b) => (SPEC_ORDER.indexOf(a) + 1 || 99) - (SPEC_ORDER.indexOf(b) + 1 || 99))
-    .map((f) => mk(`spec/${f}.md`, f === "README" ? "Overview" : undefined));
-  const decisions = list("decisions").sort().map((f) => mk(`decisions/${f}`));
-  cache = [
-    { title: "Getting started", docs: [mk("guide.md", "Getting started"), mk("demo.md", "Demo: a vulnerable agent")] },
-    { title: "Language specification", docs: spec },
-    { title: "Design decisions", docs: decisions },
-  ];
+  cache = NAV.map(([title, files]) => ({ title, docs: files.map(mk) }));
   return cache;
 }
 

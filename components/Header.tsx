@@ -10,7 +10,7 @@ export function Header() {
         </Link>
         <nav className="nav">
           <Link href="/docs/">Docs</Link>
-          <Link href="/docs/spec/">Spec</Link>
+          <Link href="/docs/reference/cli/">Reference</Link>
           <Link href="/examples/">Examples</Link>
           <a href={REPO} target="_blank" rel="noreferrer">GitHub</a>
         </nav>

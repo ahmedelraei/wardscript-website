@@ -1,7 +1,7 @@
-# Syntax
+# Grammar
 
-Status: implemented in M1 (`ward_syntax`). This covers the grammar only; what the
-constructs *mean* (types, trust labels, effects) is specified in later sections.
+The formal grammar of Wardscript. For a gentler introduction, see
+[Language basics](../language/basics.md).
 
 ## Lexical structure
 
@@ -107,65 +107,3 @@ comparisons, which can't be chained (`a < b < c` is error W0019).
 | 5 | `* / %` |
 | 6 | unary `-` `!` |
 | 7 | postfix: `.field`, call `f(...)`, index `x[i]`, `?` (after a call that may throw) |
-
-### Statements and line breaks
-
-There are no required semicolons: a statement ends at a line break. `;` is
-still allowed, to put two statements on one line (`let a = 1; let b = 2`).
-
-A line break does **not** end a statement:
-
-- inside `( )`, `[ ]` or a record literal's `{ }`;
-- after a binary operator at the end of a line (`let total = a +` ⏎ `b`);
-- before a line starting with `.` (method chains).
-
-Everything else on the next line starts a new statement. So `-b`, `(x)` or `[0]`
-at the start of a line are never glued onto the previous line, and a record
-literal's `{` must be on the same line as its name.
-
-A block's last expression is its value. When the value isn't used (the block
-of a function without a return type, a loop body, an `if` without `else`), the
-last expression may have any type.
-
-### Block-like expressions
-
-As in Rust, an `if`, `match` or `{ ... }` at the start of a statement ends that
-statement at its closing `}`, and needs no `;`. So `match x { ... }.len()` in
-statement position is two statements; write `(match x { ... }).len()`.
-
-### AI functions
-
-An `ai fn` is answered by a model. Its body is exactly one prompt string (error
-W0016 otherwise), which may interpolate parameters. It must declare a return type
-(error W0017), because the model's answer is parsed and validated against it.
-`ai fn` implies the `llm` effect; other effects and a `budget` go between the
-signature and the body, as for any function. A `model` clause picks the models an
-`ai fn` asks, and how it retries them ([runtime](runtime.md#model-policies)).
-
-```wardscript
-ai fn triage(email: Untrusted<String>) -> Ticket
-    budget {tokens: 2000, calls: 3}
-    model {primary: fast, fallback: smart, retries: 2}
-{
-    "Fill in a ticket for this email:\n{email}"
-}
-```
-
-### Annotations
-
-Annotations go on their own lines before a function or an import; on a type or enum
-they're an error (W0024). Their strings can't interpolate (W0022). Which annotations
-exist is part of [effects](effects.md).
-
-```ward
-@allow(rule_of_two, reason = "a human approves every message")
-pub fn reply(email: Untrusted<String>) { ... }
-```
-
-## Canonical formatting
-
-`ward_syntax::printer::print` turns an AST back into canonical source (4-space indent,
-trailing commas on multi-line lists; `uses` and `budget` clauses on their own
-lines, with the body's `{` on the next line). Printing
-is a fixed point: parsing the printed output and printing again yields the same
-text. Comments are not preserved yet.

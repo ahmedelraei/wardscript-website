@@ -73,7 +73,6 @@ export async function renderMarkdown(source: string, file: string) {
     }
     if (node.tagName === "table" && parent && index !== undefined) {
       (parent as Element).children[index] = { type: "element", tagName: "div", properties: { className: ["table-wrap"] }, children: [node] };
-      return "skip";
     }
     if (node.tagName === "pre" && parent && index !== undefined) {
       const code = node.children[0] as Element | undefined;
