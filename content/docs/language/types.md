@@ -71,6 +71,11 @@ Refinements can go on record fields, enum variant payloads, type aliases and
 fields, built-in methods and enum variants. To refine a type argument, name it
 with an alias first (`List<Subject>`).
 
+## Classes
+
+Records and enums are values. For shared, changing state, use a
+[class](classes.md).
+
 ## Trust labels
 
 `Untrusted<T>` and `Trusted<T>` are the type `T` with a trust label. They're

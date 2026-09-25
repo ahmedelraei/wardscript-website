@@ -27,6 +27,9 @@ Passing untrusted text to a model is fine: `ai fn` arguments aren't sinks.
 
 ## Labels in signatures
 
+Fields of [classes](classes.md#trust) work differently: since objects are
+shared, a class field not declared `Untrusted<T>` only ever holds trusted data.
+
 Labels only need to be written in signatures, `let` annotations and type
 declarations. Inside a function they're inferred.
 

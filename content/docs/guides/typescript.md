@@ -61,6 +61,7 @@ import { configure, reset, MockModel, Anthropic, OpenAI, loadMcpConfig } from "w
 | `Map<K, V>` | `ReadonlyMap<K, V>` |
 | `Option<T>` | the value, or `null` |
 | record `Ticket` | `interface Ticket` with readonly fields |
+| class `Agent` | `class Agent`, created with `await Agent$new(...)` |
 | enum without fields | a union of string literals: `"Low" \| "Urgent"` |
 | enum with fields | a union of `{ tag: "Bug", _0: string }` objects |
 

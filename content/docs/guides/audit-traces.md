@@ -15,9 +15,9 @@ For every tool call, the trace links each argument back to where it came from an
 what cleared it:
 
 ```text
-#4   tool   `gmail.send` at support.wardscript:61:9
+#4   tool   `gmail.send` at support.ward:61:9
          arg 1: "ada@example.com" ← argument `to` from the host, vouched for by the host
-         arg 2: "Your refund" ← $.subject of a value approved by a human (#3, support.wardscript:60:24) ← that value: the output of `ai fn draft_reply` (#2), untrusted
+         arg 2: "Your refund" ← $.subject of a value approved by a human (#3, support.ward:60:24) ← that value: the output of `ai fn draft_reply` (#2), untrusted
 ```
 
 ## Where traces go

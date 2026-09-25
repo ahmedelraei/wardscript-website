@@ -117,6 +117,7 @@ thrown value in `.value`. Everything else is a subclass of `wardscript.WardError
 | `List<T>`, `Map<K, V>` | `list`, `dict` |
 | `Option<T>` | the value, or `None` |
 | record `Ticket` | frozen dataclass `Ticket` |
+| class `Agent` | class `Agent`; `init` is `__init__` (with `--async`: `await Agent._new(...)`) |
 | enum without fields | `enum.Enum`: `Priority.Low.value == "Low"` |
 | enum with fields | frozen dataclasses `Verdict.Fail("log")`, fields `_0`, `_1`, ... |
 

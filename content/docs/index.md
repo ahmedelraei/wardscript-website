@@ -36,6 +36,8 @@ shaped by an email anyone could have written, so it can't go out unreviewed.
   schema the answer must match. Invalid answers are retried with the reason.
 - **Trust checking.** Prompt injection paths are compile errors, not runtime
   surprises. See [Trust](language/trust.md).
+- **Classes.** Classes, interfaces and abstract classes for state an agent keeps
+  across calls, with fields that keep their trust label.
 - **Effects and budgets.** Functions declare what they touch (`uses {llm, mail}`)
   and what they may spend (`budget {calls: 3, cost: 0.10}`).
 - **Typed tools.** MCP servers are imported like modules, and their schemas are

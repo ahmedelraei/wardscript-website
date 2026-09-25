@@ -39,7 +39,15 @@ ward --help
 
 Download an archive from the
 [releases page](https://github.com/ahmedelraei/wardscript/releases), check it
-against `SHA256SUMS`, and put `ward` somewhere on your `PATH`.
+and put `ward` somewhere on your `PATH`. To verify it:
+
+```bash
+sha256sum -c --ignore-missing SHA256SUMS      # Linux
+shasum -a 256 -c ward-<version>-<target>.tar.gz.sha256   # macOS
+gh attestation verify ward-<version>-<target>.tar.gz --repo ahmedelraei/wardscript
+```
+
+The attestation proves the archive was built by the Wardscript release workflow.
 
 ## Using real models
 
