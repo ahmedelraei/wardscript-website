@@ -35,7 +35,7 @@ from wardscript.providers.anthropic import Anthropic
 import build.support as support
 
 runtime.configure(
-    model=Anthropic("claude-sonnet-5", prices=(3.0, 15.0)),
+    model=Anthropic("<model>", prices=(3.0, 15.0)),
     approver=lambda request: input(f"Send {request.value!r}? [y/N] ") == "y",
     trace_dir=".ward/traces",
 )

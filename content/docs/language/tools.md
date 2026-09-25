@@ -66,8 +66,8 @@ every argument is treated as a sink.
 A tool's result is always untrusted, whatever its schema says.
 
 Every parameter of a tool that may change something or reach the outside world
-is a [sink](trust.md#sinks). A tool whose schema marks it read-only and
-closed-world has no sinks. You can adjust this on the import:
+is a [sink](trust.md#sinks). A tool whose schema says it only reads, and never
+reaches outside its own system, has no sinks. You can adjust this on the import:
 
 ```ward
 @private(list_messages, read_message)

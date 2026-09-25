@@ -44,8 +44,6 @@ as events happen. Run ids sort by start time.
 | `budget_unenforceable` | a `cost` budget that couldn't be counted |
 | `run_end` | `ok`, `threw` or `error`, and the run's total tokens, calls and cost |
 
-Values are linked across records by content digests, so the trace doesn't need
-to store more than the events themselves.
 
 ## OpenTelemetry
 

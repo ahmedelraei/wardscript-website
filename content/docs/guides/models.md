@@ -8,7 +8,7 @@ On the command line, `--model` picks one:
 
 ```bash
 ward run app.ward main --model anthropic                 # the provider's default model
-ward run app.ward main --model anthropic:claude-sonnet-5
+ward run app.ward main --model anthropic:<model>
 ward run app.ward main --model openai:<model>
 ```
 
@@ -19,7 +19,7 @@ from wardscript import runtime
 from wardscript.providers.anthropic import Anthropic
 from wardscript.providers.openai import OpenAI
 
-runtime.configure(model=Anthropic("claude-sonnet-5", prices=(3.0, 15.0)))
+runtime.configure(model=Anthropic("<model>", prices=(3.0, 15.0)))
 ```
 
 - API keys come from `ANTHROPIC_API_KEY` and `OPENAI_API_KEY`, or pass a

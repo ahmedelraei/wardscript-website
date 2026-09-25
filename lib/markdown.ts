@@ -11,13 +11,20 @@ import { toString } from "hast-util-to-string";
 import { createHighlighter, type Highlighter } from "shiki";
 import type { Root, Element } from "hast";
 import { resolveLink } from "./docs";
+import { wardLight, wardDark } from "./themes";
 
 let hl: Promise<Highlighter> | null = null;
 function highlighter() {
   if (!hl) {
-    const grammar = JSON.parse(fs.readFileSync(path.join(process.cwd(), "content", "ward.tmLanguage.json"), "utf8"));
+    // The upstream grammar scopes `Trusted` and `Untrusted` alike; the brand only highlights `Untrusted`.
+    const raw = fs.readFileSync(path.join(process.cwd(), "content", "ward.tmLanguage.json"), "utf8");
+    const grammar = JSON.parse(raw, (_k, v) =>
+      v && v.name === "support.type.trust.ward" && typeof v.match === "string"
+        ? { name: "support.type.trust.untrusted.ward", match: "\\bUntrusted\\b" }
+        : v,
+    );
     hl = createHighlighter({
-      themes: ["github-light", "github-dark"],
+      themes: [wardLight, wardDark],
       langs: [{ ...grammar, name: "ward", aliases: ["wardscript"] }, "bash", "powershell", "python", "typescript", "json", "toml", "rust", "text"],
     });
   }
@@ -33,7 +40,7 @@ export async function highlight(code: string, lang = "ward") {
   if (!h.getLoadedLanguages().includes(lang)) lang = "text";
   return h.codeToHtml(code.replace(/\n$/, ""), {
     lang,
-    themes: { light: "github-light", dark: "github-dark" },
+    themes: { light: "ward-light", dark: "ward-dark" },
     defaultColor: false,
   });
 }

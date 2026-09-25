@@ -21,9 +21,7 @@ ward check app.ward --format json
 ```
 
 Reports every error and warning in the program and the modules it imports.
-`--format json` gives machine-readable output: each diagnostic's `code`,
-`severity`, `message`, `file`, `span` (byte offset, 1-based line and column),
-`labels`, `help` and `notes`.
+`--format json` prints the same diagnostics as JSON, for editors and CI tools.
 
 ## `ward build`
 
