@@ -11,7 +11,8 @@ npm run build      # static site in out/
 ## Content
 
 Docs are Markdown in `content/docs/`, written for the site (they are not copied from the
-Wardscript repo). The sidebar order is defined in `lib/docs.ts` (`NAV`); a page's title is
+Wardscript repo). The exception is `content/docs/weps/`, the enhancement proposals, which
+`sync-docs` copies from the Wardscript repo as written. The sidebar order is defined in `lib/docs.ts` (`NAV`); a page's title is
 its first `#` heading. Wardscript code blocks are highlighted with the VS Code extension's
 TextMate grammar (`content/ward.tmLanguage.json`).
 
@@ -23,7 +24,7 @@ npm run sync-docs -- ../wardscript
 
 - `/` — landing page
 - `/docs/` — getting started, language tour (`/docs/language/...`), guides (`/docs/guides/...`)
-  and reference (`/docs/reference/...`)
+  and reference (`/docs/reference/...`), and enhancement proposals (`/docs/weps/...`)
 - `/playground/` — edit, check, build and run Wardscript in the browser
 - `/examples/` — the example programs
 

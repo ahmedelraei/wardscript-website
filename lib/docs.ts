@@ -37,7 +37,8 @@ export function sections(): Section[] {
     const slug = slugFor(file);
     return { file, slug, href: hrefFor(slug), title: titleOf(file) };
   };
-  cache = NAV.map(([title, files]) => ({ title, docs: files.map(mk) }));
+  const weps = fs.readdirSync(path.join(ROOT, "weps")).filter((f) => f.endsWith(".md")).sort();
+  cache = [...NAV, ["Enhancement proposals", weps.map((f) => `weps/${f}`)] as [string, string[]]].map(([title, files]) => ({ title, docs: files.map(mk) }));
   return cache;
 }
 
