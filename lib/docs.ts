@@ -22,7 +22,7 @@ export function slugFor(file: string): string[] {
 
 export const hrefFor = (slug: string[]) => "/docs" + (slug.length ? "/" + slug.join("/") : "");
 
-const SPEC_ORDER = ["README", "syntax", "names", "types", "trust", "effects", "tools", "runtime", "typescript", "testing", "diagnostics"];
+const SPEC_ORDER = ["README", "syntax", "names", "types", "classes", "trust", "effects", "tools", "runtime", "typescript", "testing", "diagnostics"];
 
 let cache: Section[] | null = null;
 export function sections(): Section[] {

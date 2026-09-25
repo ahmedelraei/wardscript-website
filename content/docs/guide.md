@@ -28,7 +28,7 @@ macOS Apple Silicon and Intel, Windows x86_64), checks it against its SHA-256, p
 PATH. `WARD_VERSION=v0.1.0-beta.1` picks a release, `WARD_INSTALL_DIR` another folder,
 and `WARD_NO_MODIFY_PATH=1` leaves your PATH alone. You can also download an archive
 from the [releases](https://github.com/ahmedelraei/wardscript/releases) and check it
-against `SHA256SUMS`. To uninstall, delete `~/.ward` and the PATH line the installer
+against `SHA256SUMS` or its build attestation ([verifying](releasing.md#verifying-a-download)). To uninstall, delete `~/.ward` and the PATH line the installer
 added (it's marked "Added by the Wardscript installer").
 
 `ward run` and `ward test` bring their own copy of the Python runtime. To import
@@ -65,15 +65,18 @@ recorded answer. [The spec](spec/README.md) describes the language.
 2. **Trust.** Parameters and results are `Untrusted` or trusted; tool arguments are
    sinks. `ward check` reports W0107 with the path untrusted data took
    ([trust](spec/trust.md)).
-3. **Effects and budgets.** `uses {llm, mail.send}` and `budget {calls: 3, cost:
+3. **Classes.** `class`, `interface` and `abstract class` for state an agent keeps
+   across calls; a field not declared `Untrusted` only ever holds trusted data
+   ([classes](spec/classes.md)).
+4. **Effects and budgets.** `uses {llm, mail.send}` and `budget {calls: 3, cost:
    0.10}`; the Rule of Two ([effects](spec/effects.md)).
-4. **Tools.** `import mcp "gmail" as mail`, with schemas pinned by `ward lock`
+5. **Tools.** `import mcp "gmail" as mail`, with schemas pinned by `ward lock`
    from your `mcp.json` ([tools](spec/tools.md); see `examples/inbox`).
-5. **Models.** `model {primary: fast, fallback: smart, retries: 2}` and
+6. **Models.** `model {primary: fast, fallback: smart, retries: 2}` and
    `ward run --model fast=anthropic:<model>` ([runtime](spec/runtime.md#model-policies)).
-6. **Tests.** `test "..." { assert ... }`, `ward test`, `ward test --record`
+7. **Tests.** `test "..." { assert ... }`, `ward test`, `ward test --record`
    ([tests](spec/testing.md)).
-7. **Running it.** `ward build` writes a Python module (and `.pyi` stubs) to import
+8. **Running it.** `ward build` writes a Python module (and `.pyi` stubs) to import
    from your application; `wardscript.runtime.configure(...)` sets the model,
    approver and tools; every run leaves an audit trace (`ward trace show`)
    ([runtime](spec/runtime.md)).
