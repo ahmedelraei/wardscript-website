@@ -6,23 +6,23 @@ const HERO = `import mcp "gmail" as mail
 
 type Reply { subject: String, body: String }
 
-// The model's output is untrusted: it was shaped by the email.
+// Shaped by the email, so it's untrusted.
 ai fn draft_reply(email: Untrusted<String>) -> Reply {
-    "Write a short, polite reply to this email:\\n{email}"
+    "Write a short, polite reply:\\n{email}"
 }
 
 fn no_links(text: String) -> Bool {
-    !text.contains("http://") && !text.contains("https://")
+    !text.contains("http")
 }
 
-pub fn answer(email: Untrusted<String>, to: String) -> String throws String
+pub fn answer(email: Untrusted<String>, to: String)
+    throws String
     uses {llm, mail.send}
 {
     let reply = draft_reply(email)
     let subject = validate(reply.subject, no_links)?
     let body = validate(reply.body, no_links)?
     mail.send(to, subject, body)
-    return "sent"
 }`;
 
 const ERROR = `[W0107] Error: untrusted data reaches the tool call \`mail.send_email\`
