@@ -43,7 +43,10 @@ pre.shiki { margin: 0; padding: 16px 18px; overflow-x: auto; font-size: 13px; li
 @media (max-width: 480px) { .nav { gap: 12px; font-size: 14px; } .nav a:last-child { display: none; } }
 
 /* landing */
-.hero { max-width: 1280px; margin: 0 auto; padding: 72px 16px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.hero { max-width: 1280px; margin: 0 auto; padding: 72px 16px 56px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+.hero-text { min-width: 0; }
+.hero-code pre.shiki { font-size: 12.5px; }
+.hero-code pre:focus { outline: none; }
 .hero h1 { font-size: clamp(36px, 5vw, 56px); margin: 16px 0; }
 .hero h1 em { font-style: normal; color: var(--accent); }
 .lede { font-size: 18px; color: var(--muted); max-width: 60ch; }
@@ -181,3 +184,4 @@ table strong { color: var(--accent); }
 .side-section h4 { color: var(--accent); }
 .prose blockquote { background: var(--accent-soft); border-left-color: var(--accent); color: var(--fg); padding: 10px 16px; }
 .doc > h1::after { content: ""; display: block; width: 48px; height: 3px; margin-top: 14px; background: var(--accent); }
+@media (max-width: 1024px) { .hero { grid-template-columns: minmax(0, 1fr); } }
