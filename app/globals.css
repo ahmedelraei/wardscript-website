@@ -238,3 +238,8 @@ table strong { color: var(--accent); }
   .pg-side { min-height: 360px; }
 }
 @media (max-width: 1024px) { .hero { grid-template-columns: minmax(0, 1fr); } }
+.pg-panel:has(.pg-code) { padding: 0; }
+.pg-code .cm-editor { background: var(--bg-code); color: var(--fg); font-size: 12.5px; }
+.pg-code .cm-scroller { font-family: var(--mono); line-height: 1.6; }
+.pg-code .cm-gutters { background: var(--bg-code); border-right: 1px solid var(--border); color: var(--muted); }
+.pg-code .cm-editor.cm-focused { outline: none; }
