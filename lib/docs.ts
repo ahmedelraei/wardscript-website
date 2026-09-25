@@ -27,7 +27,7 @@ const NAV: [string, string[]][] = [
   ["Getting started", ["index.md", "installation.md", "quickstart.md", "prompt-injection.md"]],
   ["Language", ["language/basics.md", "language/types.md", "language/ai-functions.md", "language/errors.md", "language/trust.md", "language/effects.md", "language/tools.md", "language/testing.md"]],
   ["Guides", ["guides/python.md", "guides/typescript.md", "guides/models.md", "guides/audit-traces.md"]],
-  ["Reference", ["reference/cli.md", "reference/diagnostics.md", "reference/grammar.md"]],
+  ["Reference", ["reference/cli.md", "reference/diagnostics.md"]],
 ];
 
 let cache: Section[] | null = null;

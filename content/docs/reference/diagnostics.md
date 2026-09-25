@@ -9,8 +9,8 @@ error in a file rather than stopping at the first one. If a file has syntax
 errors, name and type checking are skipped, since those errors would mostly be
 echoes.
 
-For editor and CI integrations, `ward check --format json` reports each
-diagnostic with its code, severity, message, location and labels.
+Use this page to look up a code you've run into. Every error message also
+explains itself and, where it can, suggests a fix.
 
 ## W00xx: syntax
 
