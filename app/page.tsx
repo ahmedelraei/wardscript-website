@@ -45,6 +45,17 @@ const FEATURES = [
   { i: "✓", t: "Recorded tests", d: "test blocks replay recorded model answers and tool results, so ward test is deterministic in CI. ward test --record captures new ones.", href: "/docs/language/testing/" },
 ];
 
+const ATTACKS = [
+  { label: "Our port", blocked: 481, human: 8, through: 0 },
+  { label: "Blind port", blocked: 431, human: 54, through: 4 },
+];
+
+const UTILITY = [
+  { suite: "Banking", total: 16, ours: 16, blind: 16 },
+  { suite: "Slack", total: 21, ours: 21, blind: 16 },
+  { suite: "Workspace", total: 40, ours: 40, blind: 39 },
+];
+
 export default async function Home() {
   const [hero, err] = await Promise.all([highlight(HERO, "ward"), highlight(ERROR, "text")]);
   return (
@@ -117,8 +128,43 @@ export default async function Home() {
             </table>
           </div>
           <div className="charts">
-            <img src="/img/agentdojo-attacks.svg" alt="Our port blocked 481 attacks and 8 needed a human; 0 got through. The blind port blocked 431, 54 needed a human, 4 got through." />
-            <img src="/img/agentdojo-utility.svg" alt="User tasks that succeed per suite: our port 16/16, 21/21, 40/40; the blind port 16/16, 16/21, 39/40." />
+            <figure className="chart">
+              <figcaption>What happened to 489 attacks<span>User task × injection task pairs; the attacker controls every model answer</span></figcaption>
+              <ul className="legend">
+                <li><i className="k-ok" />Blocked by the program</li>
+                <li><i className="k-warn" />Stopped only by a human approving</li>
+                <li><i className="k-bad" />Got through</li>
+              </ul>
+              {ATTACKS.map((r) => (
+                <div className="stack-row" key={r.label}>
+                  <b>{r.label}</b>
+                  <div className="stack" role="img" aria-label={`${r.blocked} blocked, ${r.human} needed a human, ${r.through} got through`}>
+                    <span className="k-ok" style={{ flexGrow: r.blocked }} />
+                    <span className="k-warn" style={{ flexGrow: r.human }} />
+                    <span className="k-bad" style={{ flexGrow: r.through }} />
+                  </div>
+                  <small>{r.blocked} blocked · {r.human} needed a human · <strong>{r.through} got through</strong></small>
+                </div>
+              ))}
+            </figure>
+            <figure className="chart">
+              <figcaption>User tasks that succeed<span>Per suite, with scripted (honest) model answers</span></figcaption>
+              <ul className="legend">
+                <li><i className="k-ours" />Our port</li>
+                <li><i className="k-blind" />Blind port</li>
+              </ul>
+              {UTILITY.map((u) => (
+                <div className="bar-group" key={u.suite}>
+                  <b>{u.suite}</b>
+                  {([["k-ours", u.ours], ["k-blind", u.blind]] as const).map(([k, v]) => (
+                    <div className="bar" key={k}>
+                      <span className={k} style={{ width: `${(v / u.total) * 100}%` }} />
+                      <small>{v}/{u.total}</small>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </figure>
           </div>
           <p className="muted small">
             Utility uses scripted model answers, and published results for other defenses measure general agents with
