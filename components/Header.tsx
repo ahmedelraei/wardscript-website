@@ -11,6 +11,7 @@ export function Header() {
         <nav className="nav">
           <Link href="/docs/">Docs</Link>
           <Link href="/docs/reference/cli/">Reference</Link>
+          <Link href="/playground/">Playground</Link>
           <Link href="/examples/">Examples</Link>
           <a href={REPO} target="_blank" rel="noreferrer">GitHub</a>
         </nav>

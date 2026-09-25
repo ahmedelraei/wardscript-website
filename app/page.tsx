@@ -60,7 +60,7 @@ export default async function Home() {
           </p>
           <div className="cta">
             <Link href="/docs/" className="btn primary">Get started</Link>
-            <Link href="/docs/prompt-injection/" className="btn">See the demo</Link>
+            <Link href="/playground/" className="btn">Try it in the browser</Link>
           </div>
           <pre className="install"><span className="muted">$</span> curl -fsSL https://raw.githubusercontent.com/ahmedelraei/wardscript/main/install/install.sh | sh</pre>
         </div>
