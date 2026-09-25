@@ -9,6 +9,7 @@ import { lintGutter, setDiagnostics, type Diagnostic as CmDiagnostic } from "@co
 import { wardLanguage, wardHighlight } from "../lib/ward-mode";
 import { loadWard, filesOf, ENTRY, type Report } from "../lib/ward-wasm";
 import { runPython, type RunOutput } from "../lib/pyodide-run";
+import { CodeView } from "./CodeView";
 
 export type Example = { id: string; title: string; code: string; fn?: string; args?: string[]; mock?: string };
 
@@ -190,7 +191,7 @@ export function Playground({ examples }: { examples: Example[] }) {
                 : <pre className="pg-out">{report?.text}</pre>
             )}
             {(tab === "python" || tab === "typescript") && (
-              output[tab] ? <pre className="pg-out code">{output[tab]}</pre>
+              output[tab] ? <CodeView code={output[tab]} lang={tab} />
                 : <p className="pg-empty">Fix the errors to see the generated {tab === "python" ? "Python" : "TypeScript"}.</p>
             )}
             {tab === "run" && (

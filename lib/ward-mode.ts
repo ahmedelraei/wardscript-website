@@ -65,5 +65,11 @@ export const wardHighlight = syntaxHighlighting(
     { tag: t.function(t.variableName), color: "var(--code-fn)" },
     { tag: [t.operator, t.punctuation], color: "var(--code-punct)" },
     { tag: t.meta, color: "var(--code-kw)" },
+    // Tags the Python and TypeScript grammars use, for the generated code.
+    { tag: [t.definitionKeyword, t.modifier, t.controlKeyword, t.operatorKeyword, t.moduleKeyword, t.self], color: "var(--code-kw)" },
+    { tag: [t.function(t.definition(t.variableName)), t.function(t.propertyName)], color: "var(--code-fn)" },
+    { tag: [t.className, t.definition(t.className), t.namespace], color: "var(--code-type)" },
+    { tag: [t.null, t.special(t.string)], color: "var(--code-num)" },
+    { tag: t.escape, color: "var(--code-str)" },
   ]),
 );
