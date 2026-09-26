@@ -82,7 +82,7 @@ export default async function Home() {
       </section></div>
 
       <section className="band ink">
-        <div className="band-inner two">
+        <div className="band-inner wide">
           <div>
             <h2>Remove a <code>validate</code>, and it doesn&apos;t build</h2>
             <p>
