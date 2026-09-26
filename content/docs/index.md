@@ -54,6 +54,7 @@ shaped by an email anyone could have written, so it can't go out unreviewed.
 - [Install Wardscript](installation.md)
 - [Write your first program](quickstart.md)
 - [See a vulnerable agent get rejected](prompt-injection.md)
+- [Contribute](https://github.com/ahmedelraei/wardscript/blob/main/CONTRIBUTING.md), or [report a security problem](https://github.com/ahmedelraei/wardscript/security/policy)
 
 > Wardscript is in **beta**. The language and its diagnostics may still change
 > between releases.
