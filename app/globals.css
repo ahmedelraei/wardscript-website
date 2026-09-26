@@ -67,6 +67,8 @@ pre.shiki { margin: 0; padding: 16px 18px; overflow-x: auto; font-size: 13px; li
 .band-inner { max-width: 1100px; margin: 0 auto; padding: 64px 16px; }
 .band-inner.two { display: grid; grid-template-columns: 1fr 1.3fr; gap: 40px; align-items: center; }
 .band h2, .features h2, .closing h2 { font-size: clamp(26px, 3.5vw, 36px); margin-top: 0; }
+.band-inner.wide { display: grid; gap: 28px; }
+.band-inner.wide p { max-width: 70ch; }
 .err { min-width: 0; }
 .err pre.shiki span { color: var(--fg) !important; }
 .link { font-weight: 600; }
