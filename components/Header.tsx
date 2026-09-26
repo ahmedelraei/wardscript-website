@@ -1,20 +1,31 @@
-import Link from "next/link";
-import { REPO } from "../lib/docs";
+"use client";
 
-export function Header() {
+import { useState } from "react";
+import Link from "next/link";
+
+export function Header({ repo }: { repo: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="header">
       <div className="header-inner">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" onClick={() => setMenuOpen(false)}>
           <Logo /> <span>ward<span className="script">script</span></span>
         </Link>
-        <nav className="nav">
+        <button className="nav-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}>
+          <span className="nav-toggle-lines" aria-hidden="true"><span /><span /></span>
+        </button>
+        <nav id="primary-navigation" aria-label="Primary" className={`nav${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(false)} onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            setMenuOpen(false);
+            event.currentTarget.parentElement?.querySelector<HTMLButtonElement>(".nav-toggle")?.focus();
+          }
+        }}>
           <Link href="/docs/">Docs</Link>
           <Link href="/docs/reference/cli/">Reference</Link>
           <Link href="/docs/weps/000-process/">WEPs</Link>
           <Link href="/playground/">Playground</Link>
           <Link href="/examples/">Examples</Link>
-          <a href={REPO} target="_blank" rel="noreferrer">GitHub</a>
+          <a href={repo} target="_blank" rel="noreferrer">GitHub</a>
         </nav>
       </div>
     </header>

@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap" />
       </head>
       <body>
-        <Header />
+        <Header repo={REPO} />
         {children}
         <footer className="footer">
           <span>Wardscript is dual-licensed under MIT or Apache-2.0.</span>
